@@ -263,14 +263,6 @@ export const siteConfig = {
       answer: "What's on your to-do list? Most homeowners have a number of repair projects around the house that never seem to get done. Sometimes, it's because they lack the tools or the skills to do the job properly. Often, it's because they can't find the time in their busy schedule. This is when it's time to call Thread Stead Services! We handle everything from small repairs to major improvements, so you can focus on what matters most.",
     },
     {
-      question: 'Do you offer commercial repair services?',
-      answer: 'Yes! Our team proudly provides repair services to businesses and commercial properties throughout our service area. Whether you have a list of repairs that you keep putting off or an immediate issue that needs to be addressed before you can resume operations, we have the experience to help your business get back on track.',
-    },
-    {
-      question: 'What types of businesses do you provide service to?',
-      answer: "We've provided commercial repair services to businesses of all kinds, including restaurants and commercial kitchens, clinics and healthcare buildings, retail stores, corporate office suites, small businesses, hotels and hospitality businesses, municipal facilities, manufacturing facilities and warehouses, and banks and financial institutions. Let us take care of repairs and regular maintenance services so you can focus on the other aspects of running and growing your business.",
-    },
-    {
       question: 'How quickly can you respond to service requests?',
       answer: 'We understand that some repairs can\'t wait. We offer fast response times and can often schedule same-day or next-day service for urgent repairs. For non-emergency projects, we work with you to find a convenient time that fits your schedule.',
     },
