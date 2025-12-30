@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { siteConfig } from '@/config/site'
 import ParallaxOverlay from './ParallaxOverlay'
+import { formatPhoneNumber } from '@/lib/utils'
 
 export default function Hero() {
   const parallaxRef = useRef<HTMLDivElement>(null)
@@ -85,7 +86,7 @@ export default function Hero() {
               href={`tel:${siteConfig.phone}`}
               className="bg-white text-primary px-6 py-2.5 rounded-lg font-bold text-base hover:bg-gray-100 transition-all shadow-lg text-center"
             >
-              Call Now: {siteConfig.phone}
+              Call Now: {formatPhoneNumber(siteConfig.phone)}
             </a>
           </div>
         </div>

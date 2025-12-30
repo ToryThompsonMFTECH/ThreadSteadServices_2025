@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { siteConfig } from '@/config/site'
 import SearchBar from './SearchBar'
+import { formatPhoneNumber } from '@/lib/utils'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -201,7 +202,7 @@ export default function Header() {
                 href={`tel:${siteConfig.phone}`}
                 className="text-white font-semibold px-4 py-2"
               >
-                Call Now: {siteConfig.phone}
+                Call Now: {formatPhoneNumber(siteConfig.phone)}
               </a>
               <Link
                 href="/contact"

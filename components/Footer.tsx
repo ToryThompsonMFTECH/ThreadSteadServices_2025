@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { siteConfig } from '@/config/site'
+import { formatPhoneNumber } from '@/lib/utils'
 
 export default function Footer() {
   return (
@@ -21,7 +22,7 @@ export default function Footer() {
                   href={`tel:${siteConfig.phone}`}
                   className="hover:text-white transition-colors"
                 >
-                  {siteConfig.phone}
+                  {formatPhoneNumber(siteConfig.phone)}
                 </a>
               </p>
               <p>

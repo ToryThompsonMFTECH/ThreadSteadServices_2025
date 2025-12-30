@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 import { siteConfig } from '@/config/site'
+import { formatPhoneNumber } from '@/lib/utils'
 
 // Create transporter if email credentials are configured
 const getTransporter = () => {
@@ -133,12 +134,12 @@ Phone: ${body.phone}
 Service: ${body.service || 'Not specified'}
 Area: ${body.address || 'Not provided'}
 
-If you have any urgent questions, please call us directly at ${siteConfig.phone}.
+If you have any urgent questions, please call us directly at ${formatPhoneNumber(siteConfig.phone)}.
 
 Best regards,
 ${siteConfig.ownerName}
 ${siteConfig.businessName}
-${siteConfig.phone}
+${formatPhoneNumber(siteConfig.phone)}
             `.trim(),
             html: `
               <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -158,8 +159,8 @@ ${siteConfig.phone}
                 
                 <p style="font-size: 16px; line-height: 1.6; color: #333;">
                   If you have any urgent questions, please call us directly at 
-                  <a href="tel:${siteConfig.phone}" style="color: #BA0C2F; text-decoration: none; font-weight: bold;">
-                    ${siteConfig.phone}
+                  <a href="tel:${formatPhoneNumber(siteConfig.phone)}" style="color: #BA0C2F; text-decoration: none; font-weight: bold;">
+                    ${formatPhoneNumber(siteConfig.phone)}
                   </a>.
                 </p>
                 
@@ -167,7 +168,7 @@ ${siteConfig.phone}
                   Best regards,<br>
                   <strong>${siteConfig.ownerName}</strong><br>
                   ${siteConfig.businessName}<br>
-                  <a href="tel:${siteConfig.phone}" style="color: #BA0C2F; text-decoration: none;">${siteConfig.phone}</a>
+                  <a href="tel:${formatPhoneNumber(siteConfig.phone)}" style="color: #BA0C2F; text-decoration: none;">${formatPhoneNumber(siteConfig.phone)}</a>
                 </p>
               </div>
             `,

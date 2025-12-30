@@ -3,6 +3,7 @@ import { siteConfig } from '@/config/site'
 import ContactForm from '@/components/ContactForm'
 import PageHeader from '@/components/PageHeader'
 import { CheckIcon } from '@/components/Icons'
+import { formatPhoneNumber } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: `Contact Us | Request a Free Estimate in ${siteConfig.location}`,
@@ -74,7 +75,7 @@ export default function ContactPage() {
                 href={`tel:${siteConfig.phone}`}
                 className="text-3xl font-semibold text-white hover:text-gray-200 transition-colors block mb-2"
               >
-                {siteConfig.phone}
+                {formatPhoneNumber(siteConfig.phone)}
               </a>
               <p className="text-gray-200">Click to call directly</p>
             </div>

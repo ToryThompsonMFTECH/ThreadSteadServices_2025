@@ -4,6 +4,7 @@ import { siteConfig } from '@/config/site'
 import Link from 'next/link'
 import ContactForm from '@/components/ContactForm'
 import ParallaxOverlay from '@/components/ParallaxOverlay'
+import { formatPhoneNumber } from '@/lib/utils'
 
 export const metadata: Metadata = {
   title: `${siteConfig.businessName} - Quick Contact`,
@@ -21,8 +22,19 @@ export default function QRPage() {
         <div className="max-w-7xl mx-auto">
           {/* Thank You Message */}
           <div className="bg-white/15 backdrop-blur-md rounded-xl shadow-xl p-4 sm:p-5 md:p-6 mb-4 sm:mb-6 text-center border border-white/30">
+            <div className="flex justify-center mb-3">
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16">
+                <Image
+                  src="/images/logo.png"
+                  alt={`${siteConfig.businessName} Logo`}
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
             <p className="text-white text-base sm:text-lg md:text-xl font-bold mb-1">
-              👋 Thank you for scanning our card!
+              Thank you for scanning our card!
             </p>
             <p className="text-white/95 text-xs sm:text-sm md:text-base">
               We're here to help with all your home repair and improvement needs.
@@ -62,7 +74,7 @@ export default function QRPage() {
                     href={`tel:${siteConfig.phone}`}
                     className="block bg-primary text-white px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-primary-light transition-all shadow-lg text-center transform hover:scale-105"
                   >
-                    📞 Call: {siteConfig.phone}
+                    Call: {formatPhoneNumber(siteConfig.phone)}
                   </a>
 
                   {/* Email */}
@@ -70,7 +82,7 @@ export default function QRPage() {
                     href={`mailto:${siteConfig.email}`}
                     className="block bg-gray-100 text-gray-800 px-4 sm:px-6 py-3 sm:py-4 rounded-lg font-semibold hover:bg-gray-200 transition-all shadow-md text-center text-sm sm:text-base"
                   >
-                    ✉️ Email: {siteConfig.email}
+                    Email: {siteConfig.email}
                   </a>
                 </div>
 

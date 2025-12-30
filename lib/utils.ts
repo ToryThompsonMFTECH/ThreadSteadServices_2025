@@ -7,6 +7,19 @@ export function slugify(text: string): string {
     .trim()
 }
 
+export function formatPhoneNumber(phone: string): string {
+  // Remove all non-digit characters
+  const digits = phone.replace(/\D/g, '')
+  
+  // Format as XXX-XXX-XXXX if 10 digits
+  if (digits.length === 10) {
+    return `${digits.slice(0, 3)}-${digits.slice(3, 6)}-${digits.slice(6)}`
+  }
+  
+  // Return original if not 10 digits
+  return phone
+}
+
 export function findServiceBySlug(slug: string) {
   const { siteConfig } = require('@/config/site')
   

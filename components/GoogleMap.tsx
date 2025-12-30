@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { siteConfig } from '@/config/site'
+import { formatPhoneNumber } from '@/lib/utils'
 
 interface GoogleMapProps {
   address?: string
@@ -138,7 +139,7 @@ export default function GoogleMap({ address, className = '' }: GoogleMapProps) {
                 <h3 style="margin: 0 0 8px 0; color: #BA0C2F; font-weight: bold; font-size: 18px;">${siteConfig.businessName}</h3>
                 <p style="margin: 0 0 4px 0; color: #666; font-size: 14px;">${siteConfig.tagline}</p>
                 <p style="margin: 0 0 8px 0; color: #666; font-size: 14px;">${siteConfig.location}</p>
-                <a href="tel:${siteConfig.phone}" style="color: #BA0C2F; text-decoration: none; font-weight: bold; font-size: 16px;">${siteConfig.phone}</a>
+                <a href="tel:${siteConfig.phone}" style="color: #BA0C2F; text-decoration: none; font-weight: bold; font-size: 16px;">${formatPhoneNumber(siteConfig.phone)}</a>
               </div>
             `,
           })

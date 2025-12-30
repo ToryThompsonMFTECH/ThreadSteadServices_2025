@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react'
 import { CheckCircleIcon, XMarkIcon } from './Icons'
+import { siteConfig } from '@/config/site'
+import { formatPhoneNumber } from '@/lib/utils'
 
 interface SuccessModalProps {
   isOpen: boolean
@@ -94,10 +96,10 @@ export default function SuccessModal({
               We've received your message and will contact you within 24 hours. 
               If you have an urgent request, please call us directly at{' '}
               <a 
-                href="tel:6787535776"
+                href={`tel:${siteConfig.phone}`}
                 className="text-primary hover:underline font-semibold"
               >
-                (678) 753-5776
+                {formatPhoneNumber(siteConfig.phone)}
               </a>
             </p>
           </div>
