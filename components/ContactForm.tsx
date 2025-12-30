@@ -105,7 +105,17 @@ export default function ContactForm() {
         body: formDataToSend,
       })
 
-      const data = await response.json()
+      let data
+      try {
+        data = await response.json()
+      } catch (jsonError) {
+        // If response is not JSON, get text instead
+        const text = await response.text()
+        console.error('Non-JSON response:', text)
+        setSubmitStatus('error')
+        setSubmitMessage('Server error. Please try again or call us directly.')
+        return
+      }
 
       if (response.ok) {
         setFormData({
@@ -126,6 +136,7 @@ export default function ContactForm() {
         setSubmitMessage(data.error || 'Something went wrong. Please try again.')
       }
     } catch (error) {
+      console.error('Network error:', error)
       setSubmitStatus('error')
       setSubmitMessage('Network error. Please try again or call us directly.')
     } finally {

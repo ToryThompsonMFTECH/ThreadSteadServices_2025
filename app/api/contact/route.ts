@@ -33,28 +33,40 @@ interface ContactFormData {
 
 export async function POST(request: NextRequest) {
   try {
-    const formData = await request.formData()
-    
-    const body: ContactFormData = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string,
-      service: formData.get('service') as string || '',
-      address: formData.get('address') as string || '',
-      details: formData.get('details') as string,
-      referral: formData.get('referral') as string || '',
-      honeypot: formData.get('honeypot') as string || '',
-    }
+    let formData: FormData
+    let body: ContactFormData
+    let photos: File[] = []
 
-    // Extract photos from form data
-    const photos: File[] = []
-    let photoIndex = 0
-    while (formData.get(`photo_${photoIndex}`)) {
-      const photo = formData.get(`photo_${photoIndex}`) as File
-      if (photo && photo.size > 0) {
-        photos.push(photo)
+    try {
+      formData = await request.formData()
+      
+      body = {
+        name: (formData.get('name') as string) || '',
+        email: (formData.get('email') as string) || '',
+        phone: (formData.get('phone') as string) || '',
+        service: (formData.get('service') as string) || '',
+        address: (formData.get('address') as string) || '',
+        details: (formData.get('details') as string) || '',
+        referral: (formData.get('referral') as string) || '',
+        honeypot: (formData.get('honeypot') as string) || '',
       }
-      photoIndex++
+
+      // Extract photos from form data
+      let photoIndex = 0
+      let photo = formData.get(`photo_${photoIndex}`)
+      while (photo) {
+        if (photo instanceof File && photo.size > 0) {
+          photos.push(photo)
+        }
+        photoIndex++
+        photo = formData.get(`photo_${photoIndex}`)
+      }
+    } catch (parseError) {
+      console.error('Error parsing form data:', parseError)
+      return NextResponse.json(
+        { error: 'Invalid form data. Please try again.' },
+        { status: 400 }
+      )
     }
 
     // Honeypot spam check
@@ -120,12 +132,20 @@ ${photos.length > 0 ? `\nPhotos: ${photos.length} photo${photos.length > 1 ? 's'
     if (transporter) {
       try {
         // Prepare email attachments from photos
-        const attachments = await Promise.all(
-          photos.map(async (photo, index) => ({
-            filename: photo.name || `photo-${index + 1}.jpg`,
-            content: Buffer.from(await photo.arrayBuffer()),
-          }))
-        )
+        const attachments = photos.length > 0 ? await Promise.all(
+          photos.map(async (photo, index) => {
+            try {
+              const arrayBuffer = await photo.arrayBuffer()
+              return {
+                filename: photo.name || `photo-${index + 1}.jpg`,
+                content: Buffer.from(arrayBuffer),
+              }
+            } catch (error) {
+              console.error(`Error processing photo ${index + 1}:`, error)
+              return null
+            }
+          })
+        ).then(results => results.filter((r): r is { filename: string; content: Buffer } => r !== null)) : []
 
         // Send notification email to business
         const info = await transporter.sendMail({
@@ -242,10 +262,15 @@ ${formatPhoneNumber(siteConfig.phone)}
       { success: true, message: 'Thank you! We\'ll get back to you soon.' },
       { status: 200 }
     )
-  } catch (error) {
+  } catch (error: any) {
     console.error('Contact form error:', error)
+    console.error('Error details:', {
+      message: error?.message,
+      stack: error?.stack,
+      name: error?.name,
+    })
     return NextResponse.json(
-      { error: 'Something went wrong. Please try again or call us directly.' },
+      { error: error?.message || 'Something went wrong. Please try again or call us directly.' },
       { status: 500 }
     )
   }
