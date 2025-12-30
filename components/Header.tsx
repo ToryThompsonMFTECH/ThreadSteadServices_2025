@@ -5,12 +5,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { siteConfig } from '@/config/site'
-import SearchBar from './SearchBar'
 import { formatPhoneNumber } from '@/lib/utils'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const pathname = usePathname()
   
   const isActive = (path: string) => {
@@ -37,9 +35,32 @@ export default function Header() {
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
-          {/* Logo - Left Corner */}
-          <Link href="/" className="flex items-center gap-3 flex-shrink-0 mr-4">
+        {/* Company Name at Top - Mobile */}
+        <div className="md:hidden flex items-center justify-center py-0 border-b border-white/20">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="relative w-8 h-8 flex-shrink-0">
+              <Image
+                src="/images/logo.png"
+                alt={`${siteConfig.businessName} Logo`}
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-base font-bold text-white leading-tight">
+                {siteConfig.businessName}
+              </span>
+              <span className="text-xs text-white/90 font-semibold leading-tight">
+                {siteConfig.tagline}
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-between h-5 md:h-16">
+          {/* Logo - Left Corner - Desktop */}
+          <Link href="/" className="hidden md:flex items-center gap-3 flex-shrink-0 mr-4">
             <div className="relative w-12 h-12 md:w-16 md:h-16 flex-shrink-0">
               <Image
                 src="/images/logo.png"
@@ -49,7 +70,7 @@ export default function Header() {
                 priority
               />
             </div>
-            <div className="flex flex-col hidden sm:flex">
+            <div className="flex flex-col">
               <span className="text-xl md:text-2xl font-bold text-white">
                 {siteConfig.businessName}
               </span>
@@ -114,106 +135,62 @@ export default function Header() {
               Get Free Estimate
             </Link>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {isMobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
         </div>
 
-        {/* Search Bar - Separate Bar Below Nav */}
-        <div className="hidden md:block border-t border-white/20 py-3">
-          <div className="max-w-6xl mx-auto px-4">
-            <SearchBar />
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t border-white/20">
-            <div className="flex flex-col space-y-3">
-              {/* Search Bar - Mobile */}
-              <div className="mb-4">
-                <SearchBar />
-              </div>
+        {/* Mobile Navigation Bar */}
+        <div className="md:hidden py-0">
+          {/* Horizontal Scrollable Nav */}
+          <div className="overflow-x-auto scrollbar-hide -mx-2 px-2">
+            <div className="flex items-center space-x-1.5 min-w-max">
               <Link
                 href="/"
-                className={`px-4 py-2 font-medium transition-colors ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
                   isActive('/')
-                    ? 'text-white font-semibold'
-                    : 'text-white/90 hover:text-white'
+                    ? 'bg-white text-primary shadow-md'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 href="/services"
-                className={`px-4 py-2 font-medium transition-colors ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
                   isActive('/services')
-                    ? 'text-white font-semibold'
-                    : 'text-white/90 hover:text-white'
+                    ? 'bg-white text-primary shadow-md'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Services
               </Link>
               <Link
                 href="/projects"
-                className={`px-4 py-2 font-medium transition-colors ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
                   isActive('/projects')
-                    ? 'text-white font-semibold'
-                    : 'text-white/90 hover:text-white'
+                    ? 'bg-white text-primary shadow-md'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Projects
               </Link>
               <Link
                 href="/contact"
-                className={`px-4 py-2 font-medium transition-colors ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
                   isActive('/contact')
-                    ? 'text-white font-semibold'
-                    : 'text-white/90 hover:text-white'
+                    ? 'bg-white text-primary shadow-md'
+                    : 'text-white/90 hover:text-white hover:bg-white/10'
                 }`}
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contact
               </Link>
               <a
                 href={`tel:${siteConfig.phone}`}
-                className="text-white font-semibold px-4 py-2"
+                className="px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap text-white/90 hover:text-white hover:bg-white/10 transition-all bg-white/5"
               >
-                Call Now: {formatPhoneNumber(siteConfig.phone)}
+                📞 Call
               </a>
-              <Link
-                href="/contact"
-                className="bg-accent text-white px-6 py-3 rounded-lg font-semibold text-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Get Free Estimate
-              </Link>
             </div>
           </div>
-        )}
+        </div>
       </nav>
     </header>
   )

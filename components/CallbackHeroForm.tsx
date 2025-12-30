@@ -9,7 +9,6 @@ interface CallbackHeroFormData {
   lastName: string
   email: string
   phone: string
-  zipCode: string
   service: string
   area: string
   smsOptIn: boolean
@@ -21,7 +20,6 @@ interface CallbackHeroFormErrors {
   lastName?: string
   email?: string
   phone?: string
-  zipCode?: string
 }
 
 export default function CallbackHeroForm() {
@@ -30,7 +28,6 @@ export default function CallbackHeroForm() {
     lastName: '',
     email: '',
     phone: '',
-    zipCode: '',
     service: '',
     area: '',
     smsOptIn: false,
@@ -75,11 +72,6 @@ export default function CallbackHeroForm() {
     } else if (!/^[\d\s\-\+\(\)]+$/.test(formData.phone)) {
       newErrors.phone = 'Please enter a valid phone number'
     }
-    if (!formData.zipCode.trim()) {
-      newErrors.zipCode = 'ZIP code is required'
-    } else if (!/^\d{5}(-\d{4})?$/.test(formData.zipCode)) {
-      newErrors.zipCode = 'Please enter a valid ZIP code'
-    }
     
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
@@ -109,8 +101,8 @@ export default function CallbackHeroForm() {
       formDataToSend.append('email', formData.email)
       formDataToSend.append('phone', formData.phone)
       formDataToSend.append('service', formData.service || 'Callback Request')
-      formDataToSend.append('address', formData.area || formData.zipCode)
-      formDataToSend.append('details', `Service: ${formData.service || 'Not specified'}\nArea: ${formData.area || 'Not specified'}\nZIP Code: ${formData.zipCode}\nSMS Opt-in: ${formData.smsOptIn ? 'Yes' : 'No'}`)
+      formDataToSend.append('address', formData.area || 'Not specified')
+      formDataToSend.append('details', `Service: ${formData.service || 'Not specified'}\nArea: ${formData.area || 'Not specified'}\nSMS Opt-in: ${formData.smsOptIn ? 'Yes' : 'No'}`)
       formDataToSend.append('honeypot', formData.honeypot || '')
 
       // Add photos
@@ -131,7 +123,6 @@ export default function CallbackHeroForm() {
           lastName: '',
           email: '',
           phone: '',
-          zipCode: '',
           service: '',
           area: '',
           smsOptIn: false,
@@ -239,22 +230,14 @@ export default function CallbackHeroForm() {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 max-w-5xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl md:text-3xl font-bold text-primary">
+    <div className="bg-white rounded-lg shadow-lg p-3 md:p-6 max-w-full">
+      <div className="mb-2 md:mb-4">
+        <h2 className="text-lg md:text-2xl font-bold text-primary mb-2 md:mb-3">
           Let Us Call You
         </h2>
-        <button
-          type="submit"
-          form="callback-form"
-          disabled={isSubmitting}
-          className="bg-primary text-white px-6 py-2.5 rounded-lg font-bold hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-        >
-          {isSubmitting ? 'Sending...' : 'Request A Call'}
-        </button>
       </div>
       
-      <form id="callback-form" onSubmit={handleSubmit} className="space-y-4">
+      <form id="callback-form" onSubmit={handleSubmit} className="space-y-2 md:space-y-4">
         {/* Honeypot */}
         <input
           type="text"
@@ -268,9 +251,9 @@ export default function CallbackHeroForm() {
         />
 
         {/* Service and Area Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
           <div>
-            <label htmlFor="callback-service" className="block text-sm font-semibold text-gray-800 mb-1">
+            <label htmlFor="callback-service" className="block text-xs md:text-sm font-semibold text-gray-800 mb-0.5 md:mb-1">
               Service Needed (Optional)
             </label>
             <select
@@ -278,7 +261,7 @@ export default function CallbackHeroForm() {
               name="service"
               value={formData.service}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+              className="w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
             >
               <option value="">Select a service...</option>
               {allServices.map((service, index) => (
@@ -290,7 +273,7 @@ export default function CallbackHeroForm() {
           </div>
 
           <div>
-            <label htmlFor="callback-area" className="block text-sm font-semibold text-gray-800 mb-1">
+            <label htmlFor="callback-area" className="block text-xs md:text-sm font-semibold text-gray-800 mb-0.5 md:mb-1">
               Service Area (Optional)
             </label>
             <select
@@ -298,7 +281,7 @@ export default function CallbackHeroForm() {
               name="area"
               value={formData.area}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+              className="w-full px-3 md:px-4 py-2 md:py-2.5 text-sm md:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
             >
               <option value="">Select your area...</option>
               {sortedServiceAreas.map((area, index) => (
@@ -311,9 +294,9 @@ export default function CallbackHeroForm() {
         </div>
 
         {/* Personal Information - Single Row */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 items-end">
           <div>
-            <label htmlFor="callback-firstName" className="block text-sm font-semibold text-gray-800 mb-1">
+            <label htmlFor="callback-firstName" className="block text-xs md:text-sm font-semibold text-gray-800 mb-0.5 md:mb-1">
               First Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -326,19 +309,19 @@ export default function CallbackHeroForm() {
               required
               aria-invalid={errors.firstName ? 'true' : 'false'}
               aria-describedby={errors.firstName ? 'callback-firstName-error' : undefined}
-              className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
+              className={`w-full px-2 md:px-4 py-1.5 md:py-2.5 text-sm md:text-base border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
                 errors.firstName ? 'border-red-500' : 'border-gray-300'
               }`}
             />
             {errors.firstName && (
-              <p id="callback-firstName-error" className="mt-1 text-xs text-red-500" role="alert">
+              <p id="callback-firstName-error" className="mt-0.5 md:mt-1 text-xs text-red-500" role="alert">
                 {errors.firstName}
               </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="callback-lastName" className="block text-sm font-semibold text-gray-800 mb-1">
+            <label htmlFor="callback-lastName" className="block text-xs md:text-sm font-semibold text-gray-800 mb-0.5 md:mb-1">
               Last Name <span className="text-red-500">*</span>
             </label>
             <input
@@ -351,19 +334,19 @@ export default function CallbackHeroForm() {
               required
               aria-invalid={errors.lastName ? 'true' : 'false'}
               aria-describedby={errors.lastName ? 'callback-lastName-error' : undefined}
-              className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
+              className={`w-full px-2 md:px-4 py-1.5 md:py-2.5 text-sm md:text-base border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
                 errors.lastName ? 'border-red-500' : 'border-gray-300'
               }`}
             />
             {errors.lastName && (
-              <p id="callback-lastName-error" className="mt-1 text-xs text-red-500" role="alert">
+              <p id="callback-lastName-error" className="mt-0.5 md:mt-1 text-xs text-red-500" role="alert">
                 {errors.lastName}
               </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="callback-email" className="block text-sm font-semibold text-gray-800 mb-1">
+            <label htmlFor="callback-email" className="block text-xs md:text-sm font-semibold text-gray-800 mb-0.5 md:mb-1">
               Email <span className="text-red-500">*</span>
             </label>
             <input
@@ -376,20 +359,20 @@ export default function CallbackHeroForm() {
               required
               aria-invalid={errors.email ? 'true' : 'false'}
               aria-describedby={errors.email ? 'callback-email-error' : undefined}
-              className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
+              className={`w-full px-2 md:px-4 py-1.5 md:py-2.5 text-sm md:text-base border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
                 errors.email ? 'border-red-500' : 'border-gray-300'
               }`}
             />
             {errors.email && (
-              <p id="callback-email-error" className="mt-1 text-xs text-red-500" role="alert">
+              <p id="callback-email-error" className="mt-0.5 md:mt-1 text-xs text-red-500" role="alert">
                 {errors.email}
               </p>
             )}
           </div>
 
           <div>
-            <label htmlFor="callback-phone" className="block text-sm font-semibold text-gray-800 mb-1">
-              Phone Number <span className="text-red-500">*</span>
+            <label htmlFor="callback-phone" className="block text-xs md:text-sm font-semibold text-gray-800 mb-0.5 md:mb-1">
+              Phone <span className="text-red-500">*</span>
             </label>
             <input
               type="tel"
@@ -401,45 +384,21 @@ export default function CallbackHeroForm() {
               required
               aria-invalid={errors.phone ? 'true' : 'false'}
               aria-describedby={errors.phone ? 'callback-phone-error' : undefined}
-              className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
+              className={`w-full px-2 md:px-4 py-1.5 md:py-2.5 text-sm md:text-base border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
                 errors.phone ? 'border-red-500' : 'border-gray-300'
               }`}
             />
             {errors.phone && (
-              <p id="callback-phone-error" className="mt-1 text-xs text-red-500" role="alert">
+              <p id="callback-phone-error" className="mt-0.5 md:mt-1 text-xs text-red-500" role="alert">
                 {errors.phone}
               </p>
             )}
           </div>
 
-          <div>
-            <label htmlFor="callback-zipCode" className="block text-sm font-semibold text-gray-800 mb-1">
-              ZIP/Postal Code <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="callback-zipCode"
-              name="zipCode"
-              value={formData.zipCode}
-              onChange={handleChange}
-              placeholder="ex. 33770"
-              required
-              aria-invalid={errors.zipCode ? 'true' : 'false'}
-              aria-describedby={errors.zipCode ? 'callback-zipCode-error' : undefined}
-              className={`w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary ${
-                errors.zipCode ? 'border-red-500' : 'border-gray-300'
-              }`}
-            />
-            {errors.zipCode && (
-              <p id="callback-zipCode-error" className="mt-1 text-xs text-red-500" role="alert">
-                {errors.zipCode}
-              </p>
-            )}
-          </div>
         </div>
 
         {/* Photo Upload */}
-        <div>
+        <div className="hidden md:block">
           <label className="block text-sm font-semibold text-gray-800 mb-2">
             Add Photos (Optional) - Up to 5 photos
           </label>
@@ -535,35 +494,44 @@ export default function CallbackHeroForm() {
         </div>
 
         {/* SMS Opt-in */}
-        <div className="pt-2">
+        <div className="pt-1 md:pt-2">
           <label className="flex items-start cursor-pointer">
             <input
               type="checkbox"
               name="smsOptIn"
               checked={formData.smsOptIn}
               onChange={handleChange}
-              className="mt-1 w-4 h-4 text-primary focus:ring-primary rounded border-gray-300"
+              className="mt-0.5 md:mt-1 w-3 h-3 md:w-4 md:h-4 text-primary focus:ring-primary rounded border-gray-300"
             />
-            <span className="ml-2 text-sm text-gray-700">
+            <span className="ml-1.5 md:ml-2 text-xs md:text-sm text-gray-700">
               Yes! You can text me service reminders and other messages.
             </span>
           </label>
           {formData.smsOptIn && (
-            <p className="mt-2 text-xs text-gray-500 ml-6">
+            <p className="mt-1 md:mt-2 text-xs text-gray-500 ml-5 md:ml-6">
               By checking this box, I agree to opt in to receive automated SMS and/or MMS messages from {siteConfig.businessName} to the provided mobile number(s). Message data rates may apply. Reply STOP to opt out of future messages. Reply HELP for help.
             </p>
           )}
         </div>
 
         {/* Email Opt-in Disclaimer */}
-        <p className="text-xs text-gray-500 pt-2">
+        <p className="text-xs text-gray-500 pt-1 md:pt-2 hidden md:block">
           By entering your email address, you agree to receive emails about services, updates or promotions from {siteConfig.businessName}. You may unsubscribe at any time.
         </p>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-primary text-white px-4 md:px-6 py-2 md:py-2.5 rounded-lg font-bold text-sm md:text-base hover:bg-primary-light transition-colors disabled:opacity-50 disabled:cursor-not-allowed mt-2 md:mt-4"
+        >
+          {isSubmitting ? 'Sending...' : 'Request A Call'}
+        </button>
 
         {/* Error Message */}
         {submitStatus === 'error' && (
           <div
-            className="p-3 rounded-lg text-sm bg-red-50 text-red-800 border border-red-200"
+            className="p-3 rounded-lg text-sm bg-red-50 text-red-800 border border-red-200 mt-4"
             role="alert"
           >
             {submitMessage}
