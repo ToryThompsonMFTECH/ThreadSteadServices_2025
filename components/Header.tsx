@@ -139,12 +139,11 @@ export default function Header() {
 
         {/* Mobile Navigation Bar */}
         <div className="md:hidden py-0">
-          {/* Horizontal Scrollable Nav */}
-          <div className="overflow-x-auto scrollbar-hide -mx-2 px-2">
-            <div className="flex items-center space-x-1.5 min-w-max">
+          {/* Horizontal Nav - Evenly Spaced */}
+          <div className="flex items-center w-full gap-1">
               <Link
                 href="/"
-                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all flex-1 text-center ${
                   isActive('/')
                     ? 'bg-white text-primary shadow-md'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -154,7 +153,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/services"
-                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all flex-1 text-center ${
                   isActive('/services')
                     ? 'bg-white text-primary shadow-md'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -164,7 +163,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/projects"
-                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all flex-1 text-center ${
                   isActive('/projects')
                     ? 'bg-white text-primary shadow-md'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -174,7 +173,7 @@ export default function Header() {
               </Link>
               <Link
                 href="/contact"
-                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all ${
+                className={`px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap transition-all flex-1 text-center ${
                   isActive('/contact')
                     ? 'bg-white text-primary shadow-md'
                     : 'text-white/90 hover:text-white hover:bg-white/10'
@@ -184,12 +183,11 @@ export default function Header() {
               </Link>
               <a
                 href={`tel:${siteConfig.phone}`}
-                className="px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap text-white/90 hover:text-white hover:bg-white/10 transition-all bg-white/5"
+                className="px-2.5 py-1 rounded-lg font-semibold text-xs whitespace-nowrap text-white/90 hover:text-white hover:bg-white/10 transition-all bg-white/5 flex-1 text-center"
               >
                 📞 Call
               </a>
             </div>
-          </div>
         </div>
       </nav>
     </header>
