@@ -133,6 +133,8 @@ Name: ${body.name}
 Phone: ${body.phone}
 Service: ${body.service || 'Not specified'}
 Area: ${body.address || 'Not provided'}
+Project Details:
+${body.details}
 
 If you have any urgent questions, please call us directly at ${formatPhoneNumber(siteConfig.phone)}.
 
@@ -155,6 +157,8 @@ ${formatPhoneNumber(siteConfig.phone)}
                   <p style="margin: 8px 0;"><strong>Phone:</strong> ${body.phone}</p>
                   <p style="margin: 8px 0;"><strong>Service:</strong> ${body.service || 'Not specified'}</p>
                   <p style="margin: 8px 0;"><strong>Area:</strong> ${body.address || 'Not provided'}</p>
+                  <p style="margin: 8px 0;"><strong>Project Details:</strong></p>
+                  <p style="margin: 8px 0 8px 20px; white-space: pre-wrap;">${body.details.replace(/\n/g, '<br>')}</p>
                 </div>
                 
                 <p style="font-size: 16px; line-height: 1.6; color: #333;">
