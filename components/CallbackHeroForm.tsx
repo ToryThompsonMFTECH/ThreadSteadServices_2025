@@ -10,6 +10,8 @@ interface CallbackHeroFormData {
   email: string
   phone: string
   zipCode: string
+  service: string
+  area: string
   smsOptIn: boolean
   honeypot?: string
 }
@@ -29,9 +31,19 @@ export default function CallbackHeroForm() {
     email: '',
     phone: '',
     zipCode: '',
+    service: '',
+    area: '',
     smsOptIn: false,
     honeypot: '',
   })
+
+  // Get all services from categories and sort alphabetically
+  const allServices = siteConfig.serviceCategories
+    .flatMap(category => category.services.map(service => service.name))
+    .sort()
+  
+  // Sort service areas alphabetically
+  const sortedServiceAreas = [...siteConfig.serviceAreas].sort()
   const [errors, setErrors] = useState<CallbackHeroFormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
@@ -93,8 +105,9 @@ export default function CallbackHeroForm() {
           name: `${formData.firstName} ${formData.lastName}`,
           email: formData.email,
           phone: formData.phone,
-          service: 'Callback Request',
-          details: `ZIP Code: ${formData.zipCode}, SMS Opt-in: ${formData.smsOptIn ? 'Yes' : 'No'}`,
+          service: formData.service || 'Callback Request',
+          address: formData.area || formData.zipCode,
+          details: `Service: ${formData.service || 'Not specified'}\nArea: ${formData.area || 'Not specified'}\nZIP Code: ${formData.zipCode}\nSMS Opt-in: ${formData.smsOptIn ? 'Yes' : 'No'}`,
         }),
       })
 
@@ -107,6 +120,8 @@ export default function CallbackHeroForm() {
           email: '',
           phone: '',
           zipCode: '',
+          service: '',
+          area: '',
           smsOptIn: false,
           honeypot: '',
         })
@@ -168,6 +183,49 @@ export default function CallbackHeroForm() {
           autoComplete="off"
           aria-hidden="true"
         />
+
+        {/* Service and Area Selection */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="callback-service" className="block text-sm font-semibold text-gray-800 mb-1">
+              Service Needed (Optional)
+            </label>
+            <select
+              id="callback-service"
+              name="service"
+              value={formData.service}
+              onChange={handleChange}
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+            >
+              <option value="">Select a service...</option>
+              {allServices.map((service, index) => (
+                <option key={index} value={service}>
+                  {service}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="callback-area" className="block text-sm font-semibold text-gray-800 mb-1">
+              Service Area (Optional)
+            </label>
+            <select
+              id="callback-area"
+              name="area"
+              value={formData.area}
+              onChange={handleChange}
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
+            >
+              <option value="">Select your area...</option>
+              {sortedServiceAreas.map((area, index) => (
+                <option key={index} value={area}>
+                  {area}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
 
         {/* Personal Information - Single Row */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">

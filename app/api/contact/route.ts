@@ -85,9 +85,17 @@ ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
 
     // Send email (if SMTP is configured)
     const transporter = getTransporter()
+    console.log('Email configuration check:', {
+      hasTransporter: !!transporter,
+      SMTP_HOST: process.env.SMTP_HOST,
+      SMTP_USER: process.env.SMTP_USER ? '***configured***' : 'missing',
+      SMTP_PASS: process.env.SMTP_PASS ? '***configured***' : 'missing',
+      to: siteConfig.email,
+    })
+    
     if (transporter) {
       try {
-        await transporter.sendMail({
+        const info = await transporter.sendMail({
           from: process.env.SMTP_FROM || process.env.SMTP_USER,
           to: siteConfig.email,
           replyTo: body.email,
@@ -105,16 +113,28 @@ ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
             ${body.referral ? `<p><strong>How did you hear about us:</strong> ${body.referral}</p>` : ''}
           `,
         })
-      } catch (emailError) {
-        // Log error but don't fail the request
-        console.error('Email sending failed:', emailError)
+        console.log('Email sent successfully:', info.messageId)
+      } catch (emailError: any) {
+        // Log detailed error
+        console.error('Email sending failed:', {
+          message: emailError.message,
+          code: emailError.code,
+          command: emailError.command,
+          response: emailError.response,
+          responseCode: emailError.responseCode,
+        })
+        // Still return success to user, but log the error
       }
     } else {
       // Log to console if email is not configured
       console.log('=== CONTACT FORM SUBMISSION ===')
+      console.log('SMTP not configured. Missing:', {
+        SMTP_HOST: !process.env.SMTP_HOST,
+        SMTP_USER: !process.env.SMTP_USER,
+        SMTP_PASS: !process.env.SMTP_PASS,
+      })
       console.log(emailContent)
       console.log('=== END SUBMISSION ===')
-      console.log('\nTODO: Configure SMTP settings in .env.local to enable email sending')
     }
 
     return NextResponse.json(
