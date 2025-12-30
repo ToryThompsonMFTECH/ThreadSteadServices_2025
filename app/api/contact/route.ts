@@ -138,14 +138,14 @@ ${photos.length > 0 ? `\nPhotos: ${photos.length} photo${photos.length > 1 ? 's'
               const arrayBuffer = await photo.arrayBuffer()
               return {
                 filename: photo.name || `photo-${index + 1}.jpg`,
-                content: Buffer.from(arrayBuffer),
+                content: Buffer.from(arrayBuffer) as Buffer,
               }
             } catch (error) {
               console.error(`Error processing photo ${index + 1}:`, error)
               return null
             }
           })
-        ).then(results => results.filter((r): r is { filename: string; content: Buffer } => r !== null)) : []
+        ).then(results => results.filter((r) => r !== null) as Array<{ filename: string; content: Buffer }>) : []
 
         // Send notification email to business
         const info = await transporter.sendMail({
