@@ -6,7 +6,6 @@ import ServicesSection from '@/components/ServicesSection'
 import PortfolioPreview from '@/components/PortfolioPreview'
 import TestimonialsSection from '@/components/TestimonialsSection'
 import ProcessSection from '@/components/ProcessSection'
-import ServiceAreasSection from '@/components/ServiceAreasSection'
 import FAQSection from '@/components/FAQSection'
 import CTASection from '@/components/CTASection'
 import ParallaxOverlay from '@/components/ParallaxOverlay'
@@ -112,7 +111,6 @@ export default function Home() {
       <PortfolioPreview />
       <TestimonialsSection />
       <ProcessSection />
-      <ServiceAreasSection />
       <FAQSection />
       <CTASection />
     </>
