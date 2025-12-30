@@ -95,6 +95,7 @@ ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
     
     if (transporter) {
       try {
+        // Send notification email to business
         const info = await transporter.sendMail({
           from: process.env.SMTP_FROM || process.env.SMTP_USER,
           to: siteConfig.email,
@@ -113,7 +114,69 @@ ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
             ${body.referral ? `<p><strong>How did you hear about us:</strong> ${body.referral}</p>` : ''}
           `,
         })
-        console.log('Email sent successfully:', info.messageId)
+        console.log('Notification email sent successfully:', info.messageId)
+
+        // Send confirmation email to customer
+        try {
+          const confirmationInfo = await transporter.sendMail({
+            from: process.env.SMTP_FROM || process.env.SMTP_USER,
+            to: body.email,
+            subject: `Thank You for Contacting ${siteConfig.businessName}`,
+            text: `
+Thank you for contacting ${siteConfig.businessName}!
+
+We've received your request and will contact you within 24 hours.
+
+Here's a summary of your submission:
+Name: ${body.name}
+Phone: ${body.phone}
+Service: ${body.service || 'Not specified'}
+Area: ${body.address || 'Not provided'}
+
+If you have any urgent questions, please call us directly at ${siteConfig.phone}.
+
+Best regards,
+${siteConfig.ownerName}
+${siteConfig.businessName}
+${siteConfig.phone}
+            `.trim(),
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h2 style="color: #BA0C2F; margin-bottom: 20px;">Thank You for Contacting ${siteConfig.businessName}!</h2>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                  We've received your request and will contact you within <strong>24 hours</strong>.
+                </p>
+                
+                <div style="background-color: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                  <h3 style="color: #BA0C2F; margin-top: 0;">Your Submission Summary:</h3>
+                  <p style="margin: 8px 0;"><strong>Name:</strong> ${body.name}</p>
+                  <p style="margin: 8px 0;"><strong>Phone:</strong> ${body.phone}</p>
+                  <p style="margin: 8px 0;"><strong>Service:</strong> ${body.service || 'Not specified'}</p>
+                  <p style="margin: 8px 0;"><strong>Area:</strong> ${body.address || 'Not provided'}</p>
+                </div>
+                
+                <p style="font-size: 16px; line-height: 1.6; color: #333;">
+                  If you have any urgent questions, please call us directly at 
+                  <a href="tel:${siteConfig.phone}" style="color: #BA0C2F; text-decoration: none; font-weight: bold;">
+                    ${siteConfig.phone}
+                  </a>.
+                </p>
+                
+                <p style="margin-top: 30px; color: #666; font-size: 14px;">
+                  Best regards,<br>
+                  <strong>${siteConfig.ownerName}</strong><br>
+                  ${siteConfig.businessName}<br>
+                  <a href="tel:${siteConfig.phone}" style="color: #BA0C2F; text-decoration: none;">${siteConfig.phone}</a>
+                </p>
+              </div>
+            `,
+          })
+          console.log('Confirmation email sent successfully:', confirmationInfo.messageId)
+        } catch (confirmationError: any) {
+          console.error('Confirmation email failed (but notification sent):', confirmationError.message)
+          // Don't fail the request if confirmation email fails
+        }
       } catch (emailError: any) {
         // Log detailed error
         console.error('Email sending failed:', {
