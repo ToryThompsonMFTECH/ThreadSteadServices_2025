@@ -197,7 +197,7 @@ export default function ServicesPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Serving Southern Atlanta
+                Serving Greater Atlanta
               </h2>
               <p className="text-lg md:text-xl text-gray-100 leading-relaxed mb-6">
                 We proudly serve {siteConfig.location} and surrounding communities. Our local expertise means we understand the unique needs of homes in our area.

@@ -332,7 +332,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               We Serve {siteConfig.location}
             </h2>
             <p className="text-lg text-gray-700">
-              Our {category.name.toLowerCase()} services are available throughout Southern Atlanta and surrounding areas.
+              Our {category.name.toLowerCase()} services are available throughout Greater Atlanta and surrounding areas.
             </p>
           </div>
           <div className="rounded-lg overflow-hidden shadow-xl">

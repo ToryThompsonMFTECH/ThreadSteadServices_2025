@@ -38,7 +38,7 @@ export default function ServiceAreasSection() {
             </div>
             <div className="mt-6 p-4 bg-white/10 rounded-lg border border-white/20">
               <p className="text-base text-gray-200 font-medium">
-                <strong className="text-white font-bold">Service Area:</strong> We proudly serve Southern Atlanta 
+                <strong className="text-white font-bold">Service Area:</strong> We proudly serve Greater Atlanta 
                 and all surrounding communities. Don't see your area? Give us a call - we may still be able to help!
               </p>
             </div>
@@ -50,7 +50,7 @@ export default function ServiceAreasSection() {
               <GoogleMap address={siteConfig.location} className="h-[500px]" />
               <div className="absolute -bottom-4 -left-4 bg-primary text-white px-6 py-3 rounded-lg shadow-lg hidden lg:block">
                 <p className="font-bold text-lg">We Come to You!</p>
-                <p className="text-sm">Serving all of Southern Atlanta</p>
+                <p className="text-sm">Serving all of Greater Atlanta</p>
               </div>
             </div>
           </div>
