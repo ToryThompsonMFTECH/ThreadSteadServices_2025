@@ -39,6 +39,22 @@ export default function QRPage() {
         </div>
       </section>
 
+      {/* Contact Form Section - Similar to homepage sections */}
+      <section className="relative py-16 px-4 bg-black overflow-hidden border-b border-white/10">
+        <ParallaxOverlay image="/images/overlays/3.png" opacity={0.3} speed={0.3} />
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="bg-white rounded-lg shadow-2xl p-6 md:p-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4 text-center">
+              Tell Us About Your Project
+            </h2>
+            <p className="text-gray-600 text-center mb-6">
+              Fill out the form and we'll get back to you with a free estimate.
+            </p>
+            <ContactForm />
+          </div>
+        </div>
+      </section>
+
       {/* Contact Info Section - Similar to CallbackHeroForm section */}
       <section className="relative py-12 px-4 bg-black overflow-hidden border-b border-white/10">
         <ParallaxOverlay image="/images/overlays/2.png" opacity={0.3} speed={0.3} />
@@ -64,22 +80,6 @@ export default function QRPage() {
               </a>
               <p className="text-gray-300 text-sm">We respond within 24 hours</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form Section - Similar to homepage sections */}
-      <section className="relative py-16 px-4 bg-black overflow-hidden border-b border-white/10">
-        <ParallaxOverlay image="/images/overlays/3.png" opacity={0.3} speed={0.3} />
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="bg-white rounded-lg shadow-2xl p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-primary mb-4 text-center">
-              Tell Us About Your Project
-            </h2>
-            <p className="text-gray-600 text-center mb-6">
-              Fill out the form and we'll get back to you with a free estimate.
-            </p>
-            <ContactForm />
           </div>
         </div>
       </section>
