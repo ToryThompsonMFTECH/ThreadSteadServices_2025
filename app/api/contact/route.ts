@@ -1,9 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Resend } from 'resend'
+import nodemailer from 'nodemailer'
 import { siteConfig } from '@/config/site'
 
-// Only initialize Resend if API key is available
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
+// Create transporter if email credentials are configured
+const getTransporter = () => {
+  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return null
+  }
+
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: parseInt(process.env.SMTP_PORT || '587'),
+    secure: process.env.SMTP_PORT === '465', // true for 465, false for other ports
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  })
+}
 
 interface ContactFormData {
   name: string
@@ -69,26 +83,38 @@ ${body.details}
 ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
     `.trim()
 
-    // Send email (if Resend is configured)
-    if (resend && process.env.RESEND_API_KEY && process.env.FROM_EMAIL_ADDRESS) {
+    // Send email (if SMTP is configured)
+    const transporter = getTransporter()
+    if (transporter) {
       try {
-        await resend.emails.send({
-          from: process.env.FROM_EMAIL_ADDRESS,
+        await transporter.sendMail({
+          from: process.env.SMTP_FROM || process.env.SMTP_USER,
           to: siteConfig.email,
+          replyTo: body.email,
           subject: `New Contact Form: ${body.name} - ${body.service || 'General Inquiry'}`,
           text: emailContent,
+          html: `
+            <h2>New Contact Form Submission from ${siteConfig.businessName}</h2>
+            <p><strong>Name:</strong> ${body.name}</p>
+            <p><strong>Email:</strong> ${body.email}</p>
+            <p><strong>Phone:</strong> ${body.phone}</p>
+            <p><strong>Service Needed:</strong> ${body.service || 'Not specified'}</p>
+            <p><strong>Address/Area:</strong> ${body.address || 'Not provided'}</p>
+            <p><strong>Project Details:</strong></p>
+            <p>${body.details.replace(/\n/g, '<br>')}</p>
+            ${body.referral ? `<p><strong>How did you hear about us:</strong> ${body.referral}</p>` : ''}
+          `,
         })
       } catch (emailError) {
         // Log error but don't fail the request
         console.error('Email sending failed:', emailError)
-        // In production, you might want to queue this or use a different service
       }
     } else {
       // Log to console if email is not configured
       console.log('=== CONTACT FORM SUBMISSION ===')
       console.log(emailContent)
       console.log('=== END SUBMISSION ===')
-      console.log('\nTODO: Configure RESEND_API_KEY and FROM_EMAIL_ADDRESS in .env to enable email sending')
+      console.log('\nTODO: Configure SMTP settings in .env.local to enable email sending')
     }
 
     return NextResponse.json(

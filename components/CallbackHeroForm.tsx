@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react'
 import { siteConfig } from '@/config/site'
+import SuccessModal from './SuccessModal'
 
 interface CallbackHeroFormData {
   firstName: string
@@ -35,6 +36,7 @@ export default function CallbackHeroForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const validate = (): boolean => {
     const newErrors: CallbackHeroFormErrors = {}
@@ -99,8 +101,6 @@ export default function CallbackHeroForm() {
       const data = await response.json()
 
       if (response.ok) {
-        setSubmitStatus('success')
-        setSubmitMessage('Thank you! We\'ll call you soon.')
         setFormData({
           firstName: '',
           lastName: '',
@@ -111,6 +111,7 @@ export default function CallbackHeroForm() {
           honeypot: '',
         })
         setErrors({})
+        setShowSuccessModal(true)
       } else {
         setSubmitStatus('error')
         setSubmitMessage(data.error || 'Failed to send request. Please try again.')
@@ -322,20 +323,24 @@ export default function CallbackHeroForm() {
           By entering your email address, you agree to receive emails about services, updates or promotions from {siteConfig.businessName}. You may unsubscribe at any time.
         </p>
 
-        {/* Submit Status */}
-        {submitStatus !== 'idle' && (
+        {/* Error Message */}
+        {submitStatus === 'error' && (
           <div
-            className={`p-3 rounded-lg text-sm ${
-              submitStatus === 'success'
-                ? 'bg-green-50 text-green-800 border border-green-200'
-                : 'bg-red-50 text-red-800 border border-red-200'
-            }`}
+            className="p-3 rounded-lg text-sm bg-red-50 text-red-800 border border-red-200"
             role="alert"
           >
             {submitMessage}
           </div>
         )}
       </form>
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        title="Thank You!"
+        message="Your callback request has been sent successfully. We will contact you within 24 hours."
+      />
     </div>
   )
 }

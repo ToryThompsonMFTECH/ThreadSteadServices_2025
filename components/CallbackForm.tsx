@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, FormEvent } from 'react'
+import SuccessModal from './SuccessModal'
 
 interface CallbackFormData {
   name: string
@@ -27,6 +28,7 @@ export default function CallbackForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [submitMessage, setSubmitMessage] = useState('')
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {}
@@ -76,8 +78,6 @@ export default function CallbackForm() {
       const data = await response.json()
 
       if (response.ok) {
-        setSubmitStatus('success')
-        setSubmitMessage(data.message || 'Thank you! We\'ll call you soon.')
         setFormData({
           name: '',
           phone: '',
@@ -86,6 +86,7 @@ export default function CallbackForm() {
           honeypot: '',
         })
         setErrors({})
+        setShowSuccessModal(true)
       } else {
         setSubmitStatus('error')
         setSubmitMessage(data.error || 'Something went wrong. Please try again.')
@@ -217,19 +218,23 @@ export default function CallbackForm() {
         {isSubmitting ? 'Submitting...' : 'Request a Callback'}
       </button>
 
-      {/* Status Message */}
-      {submitStatus !== 'idle' && (
+      {/* Error Message */}
+      {submitStatus === 'error' && (
         <div
-          className={`p-4 rounded-lg ${
-            submitStatus === 'success'
-              ? 'bg-green-50 text-green-800 border border-green-200'
-              : 'bg-red-50 text-red-800 border border-red-200'
-          }`}
+          className="p-4 rounded-lg bg-red-50 text-red-800 border border-red-200"
           role="alert"
         >
           {submitMessage}
         </div>
       )}
+
+      {/* Success Modal */}
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={() => setShowSuccessModal(false)}
+        title="Thank You!"
+        message="Your callback request has been sent successfully. We will contact you within 24 hours."
+      />
     </form>
   )
 }
