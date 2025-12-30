@@ -52,6 +52,7 @@ export default function CallbackHeroForm() {
   const [photos, setPhotos] = useState<File[]>([])
   const [showCamera, setShowCamera] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -178,7 +179,25 @@ export default function CallbackHeroForm() {
     setPhotos((prev) => prev.filter((_, i) => i !== index))
   }
 
+  const handleCameraCapture = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const newFiles = Array.from(e.target.files)
+      setPhotos((prev) => [...prev, ...newFiles].slice(0, 5))
+      // Reset the input so the same file can be selected again
+      if (cameraInputRef.current) {
+        cameraInputRef.current.value = ''
+      }
+    }
+  }
+
   const startCamera = async () => {
+    // On mobile, use the file input with capture attribute
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      cameraInputRef.current?.click()
+      return
+    }
+    
+    // On desktop, use getUserMedia
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true })
       if (videoRef.current) {
@@ -472,6 +491,14 @@ export default function CallbackHeroForm() {
               accept="image/*"
               multiple
               onChange={handleFileSelect}
+              className="hidden"
+            />
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleCameraCapture}
               className="hidden"
             />
 
