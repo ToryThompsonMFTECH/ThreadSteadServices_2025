@@ -33,7 +33,29 @@ interface ContactFormData {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: ContactFormData = await request.json()
+    const formData = await request.formData()
+    
+    const body: ContactFormData = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      service: formData.get('service') as string || '',
+      address: formData.get('address') as string || '',
+      details: formData.get('details') as string,
+      referral: formData.get('referral') as string || '',
+      honeypot: formData.get('honeypot') as string || '',
+    }
+
+    // Extract photos from form data
+    const photos: File[] = []
+    let photoIndex = 0
+    while (formData.get(`photo_${photoIndex}`)) {
+      const photo = formData.get(`photo_${photoIndex}`) as File
+      if (photo && photo.size > 0) {
+        photos.push(photo)
+      }
+      photoIndex++
+    }
 
     // Honeypot spam check
     if (body.honeypot) {
@@ -82,6 +104,7 @@ Project Details:
 ${body.details}
 
 ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
+${photos.length > 0 ? `\nPhotos: ${photos.length} photo${photos.length > 1 ? 's' : ''} attached to this email` : ''}
     `.trim()
 
     // Send email (if SMTP is configured)
@@ -96,12 +119,20 @@ ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
     
     if (transporter) {
       try {
+        // Prepare email attachments from photos
+        const attachments = await Promise.all(
+          photos.map(async (photo, index) => ({
+            filename: photo.name || `photo-${index + 1}.jpg`,
+            content: Buffer.from(await photo.arrayBuffer()),
+          }))
+        )
+
         // Send notification email to business
         const info = await transporter.sendMail({
           from: process.env.SMTP_FROM || process.env.SMTP_USER,
           to: siteConfig.email,
           replyTo: body.email,
-          subject: `New Contact Form: ${body.name} - ${body.service || 'General Inquiry'}`,
+          subject: `New Contact Form: ${body.name} - ${body.service || 'General Inquiry'}${photos.length > 0 ? ` (${photos.length} photo${photos.length > 1 ? 's' : ''})` : ''}`,
           text: emailContent,
           html: `
             <h2>New Contact Form Submission from ${siteConfig.businessName}</h2>
@@ -113,7 +144,9 @@ ${body.referral ? `How did you hear about us: ${body.referral}` : ''}
             <p><strong>Project Details:</strong></p>
             <p>${body.details.replace(/\n/g, '<br>')}</p>
             ${body.referral ? `<p><strong>How did you hear about us:</strong> ${body.referral}</p>` : ''}
+            ${photos.length > 0 ? `<p><strong>Photos:</strong> ${photos.length} photo${photos.length > 1 ? 's' : ''} attached</p>` : ''}
           `,
+          attachments: attachments,
         })
         console.log('Notification email sent successfully:', info.messageId)
 
