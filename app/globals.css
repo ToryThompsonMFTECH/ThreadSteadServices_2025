@@ -9,7 +9,7 @@
   
   body {
     @apply text-gray-900;
-    background: linear-gradient(to bottom right, rgb(0 0 0 / 0.02), rgb(0 0 0 / 0.01), rgb(0 0 0 / 0.02));
+    background: #ffffff;
   }
 }
 

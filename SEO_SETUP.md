@@ -102,3 +102,5 @@ You can find your coordinates using Google Maps - right-click on your location a
 
 Remember: SEO is a long-term strategy. Consistency and quality content are key!
 
+
+

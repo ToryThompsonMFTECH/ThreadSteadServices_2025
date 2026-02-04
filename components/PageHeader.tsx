@@ -11,17 +11,16 @@ interface PageHeaderProps {
 
 export default function PageHeader({ title, subtitle, image, imageAlt }: PageHeaderProps) {
   return (
-    <section className="relative bg-black border-b border-primary/20 pt-24 md:pt-28 overflow-hidden">
-      <ParallaxOverlay image="/images/overlays/2.png" opacity={0.3} speed={0.35} />
+    <section className="relative bg-gradient-to-br from-gray-50 to-white border-b border-gray-200 pt-24 md:pt-28 overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Text - Left */}
           <div className="order-1">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               {title}
             </h1>
             {subtitle && (
-              <p className="text-lg md:text-xl text-gray-200 font-medium leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 font-medium leading-relaxed">
                 {subtitle}
               </p>
             )}

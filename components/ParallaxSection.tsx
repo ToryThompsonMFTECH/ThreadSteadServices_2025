@@ -29,18 +29,18 @@ export default function ParallaxSection({ children, className = '' }: ParallaxSe
     <div className={`relative overflow-hidden ${className}`}>
       <div
         ref={parallaxRef}
-        className="absolute inset-0 bg-cover bg-center bg-gradient-to-br from-primary/90 to-primary-dark/90"
+        className="absolute inset-0 bg-cover bg-center bg-gradient-to-br from-primary/60 to-primary-dark/60"
         style={{
           backgroundImage: 'url("/images/tools-hero.jpg"), linear-gradient(to bottom right, var(--tw-gradient-stops))',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
       >
-        {/* Overlay for better text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-primary-dark/75 to-primary/85" />
-        <div className="absolute inset-0 bg-black/35" />
+        {/* Lighter Overlay for better text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/50 via-primary-dark/45 to-primary/50" />
+        <div className="absolute inset-0 bg-white/20" />
       </div>
-      <ParallaxOverlay image="/images/overlays/1.png" opacity={0.4} speed={0.3} />
+      <ParallaxOverlay image="/images/overlays/1.png" opacity={0.2} speed={0.3} />
       <div className="relative z-10">{children}</div>
     </div>
   )

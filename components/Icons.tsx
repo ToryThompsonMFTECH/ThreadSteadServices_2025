@@ -339,4 +339,3 @@ export function XMarkIcon({ className = '', size = 24 }: IconProps) {
     </svg>
   )
 }
-
