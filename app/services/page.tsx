@@ -15,6 +15,8 @@ export default function ServicesPage() {
       <PageHeader
         title="Our Services"
         subtitle=""
+        image="/images/tools-hero.jpg"
+        imageAlt="Home repair tools and services"
       />
 
       {/* Services by Category */}
@@ -23,7 +25,7 @@ export default function ServicesPage() {
           <div className="space-y-16">
             {siteConfig.serviceCategories.map((category, categoryIndex) => (
               <div key={categoryIndex} id={slugify(category.name)} className="scroll-mt-20">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-6">
                   {category.name}
                 </h2>
                 

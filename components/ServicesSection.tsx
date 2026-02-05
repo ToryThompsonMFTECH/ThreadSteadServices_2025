@@ -5,7 +5,7 @@ export default function ServicesSection() {
   return (
     <section className="relative py-20 px-4 bg-gradient-to-br from-gray-50 to-white overflow-hidden border-t border-gray-200">
       <div className="relative z-10 max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 drop-shadow-lg">
+        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-gray-900 mb-6 drop-shadow-lg">
           What Can We Do For You?
         </h2>
         <p className="text-xl md:text-2xl text-gray-700 mb-8 max-w-2xl mx-auto leading-relaxed">

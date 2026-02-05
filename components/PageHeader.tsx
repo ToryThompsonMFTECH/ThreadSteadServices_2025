@@ -16,7 +16,7 @@ export default function PageHeader({ title, subtitle, image, imageAlt }: PageHea
         <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Text - Left */}
           <div className="order-1">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900 mb-4">
               {title}
             </h1>
             {subtitle && (

@@ -14,7 +14,7 @@ export interface ServiceCategory {
 }
 
 export const siteConfig = {
-  businessName: 'Thread Stead Services',
+  businessName: 'Threadstead Services',
   tagline: 'We Make Your Homestead Home',
   ownerName: 'Richard Threadgill',
   location: 'Greater Atlanta, GA',
@@ -260,7 +260,7 @@ export const siteConfig = {
   faqs: [
     {
       question: 'Why do homeowners need home repair services?',
-      answer: "What's on your to-do list? Most homeowners have a number of repair projects around the house that never seem to get done. Sometimes, it's because they lack the tools or the skills to do the job properly. Often, it's because they can't find the time in their busy schedule. This is when it's time to call Thread Stead Services! We handle everything from small repairs to major improvements, so you can focus on what matters most.",
+      answer: "What's on your to-do list? Most homeowners have a number of repair projects around the house that never seem to get done. Sometimes, it's because they lack the tools or the skills to do the job properly. Often, it's because they can't find the time in their busy schedule. This is when it's time to call Threadstead Services! We handle everything from small repairs to major improvements, so you can focus on what matters most.",
     },
     {
       question: 'How quickly can you respond to service requests?',

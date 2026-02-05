@@ -9,12 +9,24 @@ export default function TestimonialsSection() {
     <section className="relative py-20 px-4 bg-gray-50 overflow-hidden border-t border-gray-200">
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 drop-shadow-lg">
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4 drop-shadow-lg">
             What Our Customers Say
           </h2>
-          <p className="text-xl md:text-2xl text-gray-700 font-semibold max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-700 font-semibold max-w-2xl mx-auto mb-6">
             Don't just take our word for it—hear from homeowners we've helped.
           </p>
+          <a
+            href="https://www.thumbtack.com/ga/griffin/affordable-plumbing-services/richard-threadgill/service/569174286233460742"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-primary text-white px-6 py-3 rounded-lg font-bold hover:bg-primary-light transition-all duration-300 shadow-2xl hover:shadow-3xl transform hover:scale-105"
+          >
+            <span className="text-2xl">⭐</span>
+            <div className="text-left">
+              <div className="text-lg font-bold">5.0 Rating on Thumbtack</div>
+              <div className="text-sm font-medium">Read All Reviews</div>
+            </div>
+          </a>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">

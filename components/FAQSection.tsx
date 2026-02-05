@@ -15,7 +15,7 @@ export default function FAQSection() {
     <section className="relative py-20 px-4 bg-gray-50 overflow-hidden border-t border-gray-200">
       <div className="relative z-10 max-w-4xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 drop-shadow-lg">
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4 drop-shadow-lg">
             Frequently Asked Questions
           </h2>
           <p className="text-xl md:text-2xl text-gray-700 font-semibold max-w-2xl mx-auto">

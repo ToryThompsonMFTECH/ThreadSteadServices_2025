@@ -45,31 +45,38 @@ export default function Header() {
       <nav className="relative w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo - Left Corner with Premium Styling */}
-          <Link href="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0 group relative h-full py-1 md:py-2">
-            <div className="relative h-full aspect-square flex-shrink-0 transition-all duration-300 group-hover:scale-105">
-              <div className="absolute inset-0 bg-white/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative h-full w-full bg-white/5 rounded-lg p-1 md:p-1.5 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center">
-                <Image
-                  src="/images/logo.png"
-                  alt={`${siteConfig.businessName} Logo`}
-                  fill
-                  className="object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] p-1"
-                  priority
-                />
+          <div className="flex items-center gap-3 md:gap-4">
+            <Link href="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0 group">
+              <div className="relative flex-shrink-0 transition-all duration-300 group-hover:scale-105">
+                <div className="absolute inset-0 bg-white/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative bg-white/5 rounded-lg p-1 md:p-1.5 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center">
+                  <Image
+                    src="/images/logo.png"
+                    alt={`${siteConfig.businessName} Logo`}
+                    width={48}
+                    height={48}
+                    className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]"
+                    priority
+                  />
+                </div>
               </div>
-            </div>
-            <div className="hidden sm:flex flex-col justify-center">
-              <span className="text-base md:text-lg font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] tracking-tight leading-tight">
-                {siteConfig.businessName}
-              </span>
-              <span className="text-xs text-white/95 font-semibold drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)] leading-tight">
+              <div className="hidden sm:flex flex-col justify-center">
+                <span className="text-lg md:text-xl lg:text-2xl font-display font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] tracking-tight leading-tight">
+                  {siteConfig.businessName}
+                </span>
+              </div>
+            </Link>
+            
+            {/* Slogan - Left Side with Premium Font */}
+            <div className="hidden lg:flex items-center">
+              <p className="text-white font-display italic text-sm md:text-base font-light tracking-wider drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
                 {siteConfig.tagline}
-              </span>
+              </p>
             </div>
-          </Link>
+          </div>
 
-          {/* Desktop Navigation - Premium with Depth */}
-          <div className="hidden md:flex items-center justify-center flex-1 space-x-6">
+          {/* Desktop Navigation - Premium with Depth - Right Aligned */}
+          <div className="hidden md:flex items-center justify-end flex-1 space-x-6">
             <Link
               href="/"
               className={`relative font-semibold text-sm px-4 py-2 transition-all duration-300 ${
@@ -144,9 +151,12 @@ export default function Header() {
             </Link>
             <a
               href={`tel:${siteConfig.phone}`}
-              className="relative text-white font-semibold hover:text-white/90 text-sm px-4 py-2 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)] hover:scale-105"
+              className="relative bg-white/20 backdrop-blur-sm text-white font-bold text-base px-5 py-2.5 rounded-lg border-2 border-white/40 hover:bg-white/30 hover:border-white/60 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.3)] hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)] hover:scale-105 flex items-center gap-2"
             >
-              {formatPhoneNumber(siteConfig.phone)}
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+              </svg>
+              <span className="drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{formatPhoneNumber(siteConfig.phone)}</span>
             </a>
           </div>
 

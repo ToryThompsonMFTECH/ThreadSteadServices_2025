@@ -8,6 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-playfair)', 'Georgia', 'serif'],
+        display: ['var(--font-playfair)', 'Georgia', 'serif'],
+        body: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
+      },
       colors: {
         primary: {
           DEFAULT: '#BA0C2F', // UGA Red

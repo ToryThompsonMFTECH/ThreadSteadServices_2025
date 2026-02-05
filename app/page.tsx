@@ -3,7 +3,6 @@ import Link from 'next/link'
 import CallbackHeroForm from '@/components/CallbackHeroForm'
 import FactsTicker from '@/components/FactsTicker'
 import ServicesSection from '@/components/ServicesSection'
-import PortfolioPreview from '@/components/PortfolioPreview'
 import TestimonialsSection from '@/components/TestimonialsSection'
 import ProcessSection from '@/components/ProcessSection'
 import FAQSection from '@/components/FAQSection'
@@ -56,7 +55,7 @@ export default function Home() {
                 <p className="text-white/90 text-sm md:text-base font-medium tracking-wider uppercase">
                   Professional Home Repair Services
                 </p>
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
                   Quality Craftsmanship You Can Trust
                 </h1>
               </div>
@@ -74,6 +73,15 @@ export default function Home() {
                   </svg>
                   <span className="text-white font-semibold">Free Estimates</span>
                 </div>
+                <a
+                  href="https://www.thumbtack.com/ga/griffin/affordable-plumbing-services/richard-threadgill/service/569174286233460742"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg border-2 border-white hover:bg-white hover:border-white transition-all duration-300"
+                >
+                  <span className="text-gray-900 font-bold">⭐ 5.0</span>
+                  <span className="text-gray-900 font-semibold">Thumbtack</span>
+                </a>
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -101,7 +109,6 @@ export default function Home() {
       </section>
       <FactsTicker />
       <ServicesSection />
-      <PortfolioPreview />
       <TestimonialsSection />
       <ProcessSection />
       <FAQSection />

@@ -1085,7 +1085,7 @@ export function getServiceFAQs(serviceName: string, category: string, subcategor
     },
     {
       question: `Are you licensed and insured for ${serviceName.toLowerCase()}?`,
-      answer: `Absolutely. Thread Stead Services is fully licensed and insured. We carry comprehensive liability insurance to protect you and your property. You can have complete peace of mind when we're working in your home.`,
+      answer: `Absolutely. Threadstead Services is fully licensed and insured. We carry comprehensive liability insurance to protect you and your property. You can have complete peace of mind when we're working in your home.`,
     },
   ]
 }

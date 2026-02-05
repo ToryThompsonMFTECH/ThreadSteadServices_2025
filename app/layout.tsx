@@ -1,11 +1,28 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Playfair_Display, Poppins } from 'next/font/google'
 import './globals.css'
 import ConditionalLayout from '@/components/ConditionalLayout'
 import StructuredData from '@/components/StructuredData'
 import { siteConfig } from '@/config/site'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const playfair = Playfair_Display({ 
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+})
+
+const poppins = Poppins({ 
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-poppins',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com'),
@@ -62,7 +79,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${playfair.variable} ${poppins.variable} font-sans`}>
         <StructuredData />
         <ConditionalLayout>{children}</ConditionalLayout>
       </body>
