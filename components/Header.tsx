@@ -49,13 +49,12 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-2 md:gap-3 flex-shrink-0 group">
               <div className="relative flex-shrink-0 transition-all duration-300 group-hover:scale-105">
                 <div className="absolute inset-0 bg-white/10 rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative bg-white/5 rounded-lg p-1 md:p-1.5 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center">
+                <div className="relative bg-white/5 rounded-lg h-12 w-12 md:h-16 md:w-16 shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_4px_8px_rgba(0,0,0,0.3)] flex items-center justify-center overflow-hidden">
                   <Image
                     src="/images/logo.png"
                     alt={`${siteConfig.businessName} Logo`}
-                    width={48}
-                    height={48}
-                    className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]"
+                    fill
+                    className="object-cover p-1 drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]"
                     priority
                   />
                 </div>

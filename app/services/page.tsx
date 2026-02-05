@@ -13,10 +13,17 @@ export default function ServicesPage() {
   return (
     <div className="bg-white">
       <PageHeader
-        title="Our Services"
+        title="What Can We Do For You?"
         subtitle=""
-        image="/images/tools-hero.jpg"
-        imageAlt="Home repair tools and services"
+        images={[
+          '/images/services/bathroom-caulking/bathroom-caulking.png',
+          '/images/services/bathroom-caulking/bathroom-caulking2.png',
+          '/images/services/basement-remodeling-and-repair/basement_remodel1.png',
+          '/images/services/baseboard-installation-and-repair/baseboards1.png',
+          '/images/tools-hero.jpg',
+          '/images/contactHeader.png',
+        ]}
+        imageAlt="Home repair and improvement services"
       />
 
       {/* Services by Category */}
@@ -30,7 +37,7 @@ export default function ServicesPage() {
                 </h2>
                 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {category.services.map((service, serviceIndex) => (
+                  {[...category.services].sort((a, b) => a.name.localeCompare(b.name)).map((service, serviceIndex) => (
                     <Link
                       key={serviceIndex}
                       href={`/services/${slugify(service.name)}`}

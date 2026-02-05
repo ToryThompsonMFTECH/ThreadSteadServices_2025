@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { siteConfig } from '@/config/site'
 import PageHeader from '@/components/PageHeader'
+import ProjectsCarousel from '@/components/ProjectsCarousel'
 
 export const metadata: Metadata = {
   title: `Projects | Our Recent Work in ${siteConfig.location}`,
@@ -73,12 +74,32 @@ const projects = [
 export default function ProjectsPage() {
   return (
     <div className="bg-white">
-      <PageHeader
-        title="Our Recent Projects"
-        subtitle="Quality workmanship and attention to detail in every project we complete."
-        image="/images/tools-hero.jpg"
-        imageAlt="Our projects of home repair work"
-      />
+      {/* Hero Section with Carousel */}
+      <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 border-b border-gray-700 pt-24 md:pt-28 overflow-hidden">
+        {/* Premium depth layers */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/10" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+        
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Text - Left */}
+            <div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)] leading-tight">
+                Our Recent Projects
+              </h1>
+              <p className="text-lg md:text-xl text-gray-300 font-medium leading-relaxed">
+                Quality workmanship and attention to detail in every project we complete.
+              </p>
+            </div>
+
+            {/* Carousel - Right */}
+            <div>
+              <ProjectsCarousel projects={projects} />
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Intro Section */}
       <section className="py-16 px-4 bg-gradient-to-br from-primary to-primary-dark text-white">
@@ -125,56 +146,6 @@ export default function ProjectsPage() {
                 </li>
               </ul>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Grid */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className={`rounded-lg shadow-lg overflow-hidden border-2 hover:shadow-xl transition-all ${
-                  index % 3 === 0 
-                    ? 'bg-gradient-to-br from-primary/5 to-transparent border-primary/20' 
-                    : index % 3 === 1
-                    ? 'bg-gradient-to-br from-accent/5 to-transparent border-accent/20'
-                    : 'bg-gradient-to-br from-primary/10 to-accent/10 border-primary/30'
-                }`}
-              >
-                {/* Image Placeholders */}
-                <div className="grid grid-cols-2 gap-2 p-2 bg-gradient-to-br from-gray-100 to-gray-200">
-                  <div className="aspect-square bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-                    <span className="text-primary text-sm font-semibold">Before</span>
-                  </div>
-                  <div className="aspect-square bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center">
-                    <span className="text-accent text-sm font-semibold">After</span>
-                  </div>
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-primary mb-2">
-                    {project.name}
-                  </h3>
-                  <p className="text-gray-800 font-medium mb-4">{project.description}</p>
-                  
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag, tagIndex) => (
-                      <span
-                        key={tagIndex}
-                        className="px-3 py-1 bg-primary text-white text-sm rounded-full font-semibold"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
